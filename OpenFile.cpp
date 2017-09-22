@@ -43,22 +43,22 @@ vector <string> OpenFile::concatenaSentMail(){
                 if ((!f->d_name || f->d_name[0] == '.'))
                     continue; // Skip everything that starts with a dot
                 dName = f->d_name;
-                if(dName == "_sent_mail"){
+                if(dName == "sent"){
                     //cout<<dName<<endl;
-                    aux = aux+"/"+pathUsuario[i];
-                    aux = aux+"/_sent_mail";
-                    cout<<aux<<endl;
+                    //aux = aux+"/"+pathUsuario[i];
+                    aux = pathUsuario[i]+"/sent";
+                    //cout<<aux<<endl;
                     this->pathFinal.push_back(aux);
                 }
-                else if(dName == "sent_items"){
+                else if(dName == "_sent_mail"){
                     //cout<<dName<<endl;
-                    aux = aux+"/"+pathUsuario[i];
-                    aux = aux+"/sent_items";
-                    cout<<aux<<endl;
+                    //aux = aux+"/"+pathUsuario[i];
+                    aux = pathUsuario[i]+"/_sent_mail";
+                    //cout<<aux<<endl;
                     this->pathFinal.push_back(aux);
                 }
                 
-                printf("File: %s\n", f->d_name);
+                //printf("File: %s\n", f->d_name);
             }
             closedir(dir);
         }
@@ -73,32 +73,34 @@ vector <string> OpenFile::concatenaFinal(){
     
     //vector<string>::iterator i = this->pathFinal.begin();
     string aux= "";
-    string barra = "/";
+
     //i = this->pathFinal.begin(); i != this->pathFinal.end(); ++i
     for (unsigned int i=0; i<this->pathFinal.size(); i++){
         //cout<<*i<<endl;
         aux = pathFinal[i]+"/";
-        cout<<aux<<endl;
-        string c = aux;
-        cout<<c<<endl;
-        if (auto dir = opendir(c.c_str())) {
+        //cout<<aux<<endl;
+        //string c = aux;
+        //cout<<"Aux mai barra: "<<c<<endl;
+        if (auto dir = opendir(aux.c_str())) {
             while (auto f = readdir(dir)) {
                 if (!f->d_name || f->d_name[0] == '.')
                     continue; // Skip everything that starts with a dot
-                printf("File: %s\n", f->d_name);
-                aux = barra + f->d_name;
-                cout<<aux<<endl;
+                //printf("File: %s\n", f->d_name);
+                aux = aux + f->d_name;
+                //cout<<aux<<endl;
                 this->pathArquivoFinal.push_back(aux);
-                
+                aux = pathFinal[i]+"/";
             }
             closedir(dir);
         }
     }
-    cout<<"\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
-    for( auto printer : pathArquivoFinal){
-        cout<<printer<<endl;
-    }
-    cout<<"\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+    this->pathUsuario.clear();
+    this->pathFinal.clear();
+//    cout<<"\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+//    for( auto printer : pathArquivoFinal){
+//        cout<<printer<<endl;
+//    }
+//    cout<<"\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
     return this->pathArquivoFinal;
     
 }

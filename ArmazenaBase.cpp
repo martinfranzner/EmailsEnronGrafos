@@ -15,15 +15,16 @@ vector<string> ArmazenaBase::criaVetorQuemEnviou(vector<pair<string,vector<strin
     for( auto coco : vetDupli){
         vetorUnico.push_back(coco.first);
     }
+    //cout<<"Aqui comeca o sort"<<endl;
     sort(vetorUnico.begin(), vetorUnico.end());
     vetorUnico.erase( unique( vetorUnico.begin(), vetorUnico.end() ), vetorUnico.end() );
 
-    unsigned int counter = 0;
-    for( auto printer : vetorUnico){
-        cout<<printer<<endl;
-        counter++;
-    }
-    cout<<counter<<endl;
+//    unsigned int counter = 0;
+//    for( auto printer : vetorUnico){
+//        cout<<printer<<endl;
+//        counter++;
+//    }
+//    cout<<counter<<endl;
     
     return vetorUnico;
 }
@@ -47,8 +48,12 @@ vector<pair<string,vector<string>>> ArmazenaBase::criaVetorDuplicado(){
     
     vector<string>::iterator i = pathParaLer.begin();
     vector<string>::iterator j = vetorDeString.begin();//aqui comeca a iterar linha por linha
-    
+    cout<<"\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r"<<endl;
+    cout<<"Emails para ler: "<<pathParaLer.size()<<endl;
+     cout<<"\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r"<<endl;
+    unsigned int rey=0;
     for(i = pathParaLer.begin(); i != pathParaLer.end(); ++i){//ira abrir todos os arquivos de email
+        //cout<<*i<<endl;
         vetorDeString = a->readByLine((*i));//aqui le linha por linha do arquivo e joga num vetor de strings
         j = vetorDeString.begin();
         j++;//incrementa o iterador para ir direto para linha 3
@@ -61,7 +66,7 @@ vector<pair<string,vector<string>>> ArmazenaBase::criaVetorDuplicado(){
             }
             if(distance(vetorDeString.begin(), j) == 2 ){//se distancia do inicio ==2 esta na linha do From:
                 from = stringSplitada[1];
-                //cout<<"Quem mandou email: "<<from<<endl;
+                //cout<<"Quem mandou FROM: "<<from<<endl;
             }
             
             if(distance(vetorDeString.begin(), j) >= 3 ){//se distancia do inicio >=3 esta na linha do To:
@@ -71,15 +76,22 @@ vector<pair<string,vector<string>>> ArmazenaBase::criaVetorDuplicado(){
                 }
                 for(unsigned int n=0;n<stringSplitada.size();++n){
                     if(stringSplitada[n] != "To:"){//compara para nao adicionar o To:
+                        //cout<<n<<" - "<<stringSplitada[n]<<endl;
                         toEmail.push_back(stringSplitada[n]);//adiciona no vetor de emails de quem recebeu
                     }
                 }
             }
             ++j;//vai para a proxima linha do vetorDeString
+            //cout<<*j<<endl;
         }
+        //stringSplitada.clear();
         vetorFinalDuplicado.push_back(make_pair(from,toEmail));//bota no vetor de pair
-        
+        toEmail.clear();
+        //rey++;
+        //cout<<"REY: "<<rey<<endl;
+        //vetorDeString.clear();
     }
-    
+    //cout<<"Saiu do fooooorrr"<<endl;
+    pathParaLer.clear();
     return vetorFinalDuplicado;
 }

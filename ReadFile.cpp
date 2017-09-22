@@ -26,27 +26,6 @@ vector<string>ReadFile::readByLine(string fileToRead)
     }
     
     else cout << "Unable to open file";
-    /*
-    ifstream file;
     
-    string nome = fileToRead;
-    string linha;
-    vector<string> * L = new vector<string>();
-    
-    file.open(nome);
-    
-    if (file.is_open())
-    {
-        while (getline(file, linha))
-        {
-            L->push_back(linha);
-        }
-        file.close();
-    }
-    else
-    {
-        cout << "Erro de abertura de arquivo";
-    }
-    */
     return L;
 }

@@ -20,31 +20,31 @@
 
 using namespace std;
 int main(int argc, const char * argv[]) {
-    string caminho = "/Users/martinfranzner/Documents/PUC COMPUTAÇÃO/4o semestre/Grafos/maildir/tycholiz-b/_sent_mail";
-    const char * c = caminho.c_str();
-    if (auto dir = opendir(c)) {
-        while (auto f = readdir(dir)) {
-            if (!f->d_name || f->d_name[0] == '.')
-                continue; // Skip everything that starts with a dot
-            //aux = pathInicial+"/"+f->d_name;
-            //this->pathUsuario.push_back(aux);
-            
-            //cout<<aux<<endl;
-            printf("File: %s\n", f->d_name);
-        }
-        closedir(dir);
-    }
+//    string caminho = "/Users/martinfranzner/Documents/PUC COMPUTAÇÃO/4o semestre/Grafos/maildir/tycholiz-b/_sent_mail";
+//    const char * c = caminho.c_str();
+//    if (auto dir = opendir(c)) {
+//        while (auto f = readdir(dir)) {
+//            if (!f->d_name || f->d_name[0] == '.')
+//                continue; // Skip everything that starts with a dot
+//            //aux = pathInicial+"/"+f->d_name;
+//            //this->pathUsuario.push_back(aux);
+//            
+//            //cout<<aux<<endl;
+//            printf("File: %s\n", f->d_name);
+//        }
+//        closedir(dir);
+//    }
     
     
     
     
     string strOriginal2 = "/Users/martinfranzner/Documents/PUC COMPUTAÇÃO/4o semestre/Grafos/maildir";
-    string strOriginal = "/Users/martinfranzner/Documents/PUC COMPUTAÇÃO/4o semestre/Grafos/Amostra Enron - 2016";
+    //string strOriginal = "/Users/martinfranzner/Documents/PUC COMPUTAÇÃO/4o semestre/Grafos/Amostra Enron - 2016";
     vector<pair<string,vector<string>>> vetorDuplicado;
-    ArmazenaBase *ab = new ArmazenaBase(strOriginal2);
-    vetorDuplicado = ab->criaVetorDuplicado();
+    ArmazenaBase ab =  ArmazenaBase(strOriginal2);
+    vetorDuplicado = ab.criaVetorDuplicado();
     
-    vector<string> vetorUnico = ab->criaVetorQuemEnviou(vetorDuplicado);
+    vector<string> vetorUnico = ab.criaVetorQuemEnviou(vetorDuplicado);
     
 //    int counter;
 //    for( auto printer : vetorUnico){
