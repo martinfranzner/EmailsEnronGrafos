@@ -13,31 +13,37 @@
 #include <fstream>
 #include <list>
 
+
 #include "OpenFile.hpp"
 #include "Parser.hpp"
 #include "ReadFile.hpp"
 #include "ArmazenaBase.hpp"
+#include "Grafo.hpp"
+#include "No.hpp"
+#include "NoGrafo.hpp"
+
+int existeAdjascencia(string nomeSec, list<No>* matrix,int posicao){
+    No aux;
+    string verificaAdj = "";
+    list<No>::iterator j = matrix[posicao].begin();
+    while(j != matrix[posicao].end()){
+        aux = *j;
+        verificaAdj = aux.getAdj();
+        if(verificaAdj == nomeSec){
+            j->addPeso1();
+            return 1;
+            //break;
+        }
+        j++;
+    }
+    return 0;
+}
+
+
 
 using namespace std;
 int main(int argc, const char * argv[]) {
-//    string caminho = "/Users/martinfranzner/Documents/PUC COMPUTAÇÃO/4o semestre/Grafos/maildir/tycholiz-b/_sent_mail";
-//    const char * c = caminho.c_str();
-//    if (auto dir = opendir(c)) {
-//        while (auto f = readdir(dir)) {
-//            if (!f->d_name || f->d_name[0] == '.')
-//                continue; // Skip everything that starts with a dot
-//            //aux = pathInicial+"/"+f->d_name;
-//            //this->pathUsuario.push_back(aux);
-//            
-//            //cout<<aux<<endl;
-//            printf("File: %s\n", f->d_name);
-//        }
-//        closedir(dir);
-//    }
-    
-    
-    
-    
+
     string strOriginal2 = "/Users/martinfranzner/Documents/PUC COMPUTAÇÃO/4o semestre/Grafos/maildir";
     //string strOriginal = "/Users/martinfranzner/Documents/PUC COMPUTAÇÃO/4o semestre/Grafos/Amostra Enron - 2016";
     vector<pair<string,vector<string>>> vetorDuplicado;
@@ -45,30 +51,73 @@ int main(int argc, const char * argv[]) {
     vetorDuplicado = ab.criaVetorDuplicado();
     
     vector<string> vetorUnico = ab.criaVetorQuemEnviou(vetorDuplicado);
+    //cout<<vetorUnico.size()<<endl;
     
+    int tam = vetorUnico.size();
+    Grafo g = Grafo(tam);
+    g.setaInformacao(vetorUnico);
+    
+    string nomeFirst = "";
+    string nomeSec="";
+    string verificaAdj = "";
+    int posicao;
+    list<No>* matrix = g.getMatrix();
+    No aux;
+    for(auto pairFirst : vetorDuplicado){
+        nomeFirst = pairFirst.first;
+        auto pos = find(vetorUnico.begin(), vetorUnico.end(), nomeFirst);
+        posicao = pos - vetorUnico.begin();
+        if(pos != vetorUnico.end()) {
+            //cout << pos - vetorUnico.begin() <<endl;
+        } else {
+            cout << "not found" << std::endl;
+        }
+        for(auto pairSecond : pairFirst.second){
+            nomeSec = pairSecond;
+            if(existeAdjascencia(nomeSec,matrix,posicao) == 1){
+                
+            }
+            else {
+                g.criaAdjacencia(posicao, nomeSec);
+            }
+        }
+
+        //g.imprimeAdjacencia();
+        
+    }
+    int vertices;
+    vertices = g.getVertices(vetorDuplicado);
+    cout<<vertices<<endl;
+
+    cout<<"Num de arestas: "<<g.getAresta()<<endl;
+   
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+//    for( auto coco : vetorDuplicado){
+//        //cout<<"String, From:"<<coco.first<<endl;
+//        for(auto bla: coco.second){
+//            //cout<<"Vetor, To:"<<bla<<endl;
+//            vetorUnico.push_back(bla);
+//        }
+//    }
+//
 //    int counter;
 //    for( auto printer : vetorUnico){
 //        cout<<printer<<endl;
 //        counter++;
 //    }
 //    cout<<counter<<endl;
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
 //    string strOriginal = "/Users/martinfranzner/Documents/PUC COMPUTAÇÃO/4o semestre/Grafos/Amostra Enron - 2016";
